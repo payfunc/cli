@@ -1,6 +1,6 @@
 import * as gracely from "gracely"
-import * as payfunc from "@payfunc/model";
-import { Connection } from "../Connection";
+import * as payfunc from "@payfunc/model"
+import { Connection } from "../Connection"
 import { addCommand } from "./Module"
 
 export async function update(connection: Connection, id: string, merchant: payfunc.Merchant.Creatable): Promise<payfunc.Merchant | gracely.Error> {
