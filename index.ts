@@ -1,15 +1,10 @@
 #!/usr/bin/env node
 import * as dotenv from "dotenv"
 dotenv.config()
-import { Module } from "./Module"
 
+import { application } from "./application"
 import "./Server"
-import "./Merchant";
+import "./Merchant"
 import "./Order"
 
-async function run(argument: string[]): Promise<boolean> {
-	const result = await Module.execute(argument.slice(2))
-	console.log(result ? "succeeded" : "failed")
-	return result
-}
-run(process.argv).then(result => process.exit(result ? 0 : 1), _ => process.exit(1))
+application.run(process.argv).then(result => process.exit(result ? 0 : 1), _ => process.exit(1));

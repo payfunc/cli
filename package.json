@@ -60,7 +60,8 @@
   "gracely": "0.0.31",
   "isoly": "0.0.13",
   "node-fetch": "^2.6.0",
-  "node-persist": "^3.0.5"
+  "node-persist": "^3.0.5",
+  "paramly": "0.0.3"
  },
  "devDependencies": {
   "@types/jest": "^25.1.2",
