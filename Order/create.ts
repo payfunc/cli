@@ -26,13 +26,12 @@ addCommand({
 			payfunc.Payment.Type.is(type) && type == "card" &&
 			isoly.Currency.is(currency) &&
 			await create(connection, {
-				
 				items, currency,
 				payment: {
 					type,
 					reference: argument[3],
 				},
-			}, )
+			})
 		console.info("\n" + (typeof result == "string" ? result : JSON.stringify(result, undefined, "\t")))
 		return !!(typeof result == "string" && payfunc.Order.verify(result))
 	}
