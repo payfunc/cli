@@ -1,19 +1,22 @@
+
+import * as paramly from "paramly"
+import * as cardfunc from "@cardfunc/cli"
 import * as payfunc from "@payfunc/model"
-import { addCommand } from "./Module"
 
 export function verify(Order: string): Promise<payfunc.Order | undefined> {
 	return payfunc.Order.verify(Order)
 }
-addCommand({
-	name: "verify",
-	description: "Verifies order.",
-	examples: [
-		["<order>", "Verifies order."],
-	],
-	execute: async (connection, argument, flags) => {
-		const result = await verify(argument[0])
-		console.info(JSON.stringify(result, undefined, "\t"))
-		return !!result
+export namespace verify {
+	export const command: paramly.Command<cardfunc.Connection> = {
+		name: "verify",
+		description: "Verifies order.",
+		examples: [
+			["<order>", "Verifies order."],
+		],
+		execute: async (connection, argument, flags) => {
+			const result = await verify(argument[0])
+			console.info(JSON.stringify(result, undefined, "\t"))
+			return !!result
+		}
 	}
-})
-
+}

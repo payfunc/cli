@@ -14,7 +14,7 @@
  "homepage": "https://github.com/func/cli#readme",
  "private": false,
  "bin": {
-  "payfunc": "dist/index.js"
+  "payfunc": "dist/run.js"
  },
  "main": "dist/index.js",
  "typings": "dist/index.d.ts",
@@ -48,32 +48,38 @@
   "dev": "watch 'npm run build' .",
   "lint": "tslint --config tslint.json --project .",
   "build": "tsc -p .",
+  "pretest": "npm run build",
   "test": "node dist/index.js --server env test",
+  "prerun": "npm run build",
+  "run": "node dist/run.js",
   "prepare": "npm run build",
   "clean": "rm -rf dist node_modules coverage"
  },
  "dependencies": {
-  "@payfunc/model": "^0.1.75",
+  "@cardfunc/cli": "0.0.28",
+  "@cardfunc/model": "0.0.69",
+  "@payfunc/model": "^0.1.79",
   "@types/dotenv": "^8.2.0",
-  "authly": "0.0.39",
+  "authly": "0.0.40",
   "dotenv": "^8.2.0",
-  "gracely": "0.0.31",
-  "isoly": "0.0.13",
+  "gracely": "0.0.33",
+  "isoly": "0.0.15",
   "node-fetch": "^2.6.0",
-  "node-persist": "^3.0.5",
-  "paramly": "0.0.4"
+  "npm": "^6.14.7",
+  "paramly": "0.0.5"
  },
  "devDependencies": {
-  "@types/jest": "^25.1.2",
-  "@types/node": "^13.7.0",
+  "@types/jest": "^26.0.5",
+  "@types/node": "^14.0.23",
   "@types/node-fetch": "^2.5.7",
-  "@types/node-persist": "^3.0.0",
+  "@types/node-persist": "^3.1.0",
   "babel-core": "^6.26.3",
-  "babel-jest": "^25.1.0",
-  "jest": "^25",
-  "ts-jest": "^25.2.0",
-  "tslint": "^6.0.0",
-  "typescript": "^3.7.5",
+  "babel-jest": "^26.1.0",
+  "jest": "^26",
+  "node-persist": "^3.1.0",
+  "ts-jest": "^26.1.3",
+  "tslint": "^6.1.2",
+  "typescript": "^3.9.7",
   "typescript-tslint-plugin": "^0.5.5",
   "watch": "^1.0.2"
  }

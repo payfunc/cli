@@ -1,10 +1,16 @@
-#!/usr/bin/env node
-import * as dotenv from "dotenv"
-dotenv.config()
+import * as cardfunc from "@cardfunc/cli"
+import * as Merchant from "./Merchant"
+import * as Order from "./Order"
+import * as Test from "./Test"
 
-import { application } from "./application"
-import "./Server"
-import "./Merchant"
-import "./Order"
+type Connection = cardfunc.Connection
+const Connection = cardfunc.Connection
+const Server = cardfunc.Server
 
-application.run(process.argv).then(result => process.exit(result ? 0 : 1), _ => process.exit(1));
+export {
+	Connection,
+	Merchant,
+	Order,
+	Server,
+	Test,
+}
