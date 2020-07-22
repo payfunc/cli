@@ -46,6 +46,27 @@ jobs:
               -d to=${ELKS_TO} \
               -d message="PayFunc CLI hourly test failed. ${CIRCLE_BUILD_URL}"
           when: on_fail
+  daily:
+    <<: *default
+    steps:
+      - test
+      - run:
+          name: Send Success SMS
+          command: |
+            curl -X POST https://api.46elks.com/a1/sms \
+              -u ${ELKS_API_USER}:${ELKS_API_PASSWORD} \
+              -d from=PayFuncCI \
+              -d to=${ELKS_TO} \
+              -d message="PayFunc CLI daily test succeeded. ${CIRCLE_BUILD_URL}"
+      - run:
+          name: Send Fail SMS
+          command: |
+            curl -X POST https://api.46elks.com/a1/sms \
+              -u ${ELKS_API_USER}:${ELKS_API_PASSWORD} \
+              -d from=PayFuncCI \
+              -d to=${ELKS_TO} \
+              -d message="PayFunc CLI daily test failed. ${CIRCLE_BUILD_URL}"
+          when: on_fail
   deploy:
     <<: *default
     steps:
@@ -70,12 +91,26 @@ workflows:
   hourly:
     triggers:
       - schedule:
-          cron: "37 * * * *"
+          cron: "37 0-12 * * *"
+          filters:
+            branches:
+              only: master
+      - schedule:
+          cron: "37 14-23 * * *"
           filters:
             branches:
               only: master
     jobs:
       - hourly
+  daily:
+    triggers:
+      - schedule:
+          cron: "37 13 * * *"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - daily
   build:
     jobs:
       - build:
