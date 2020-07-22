@@ -49,7 +49,7 @@
   "lint": "tslint --config tslint.json --project .",
   "build": "tsc -p .",
   "pretest": "npm run build",
-  "test": "node dist/index.js --server env test",
+  "test": "node dist/run.js --server env test",
   "prerun": "npm run build",
   "run": "node dist/run.js",
   "prepare": "npm run build",
