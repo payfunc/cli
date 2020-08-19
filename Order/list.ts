@@ -10,14 +10,11 @@ export namespace list {
 	export const command: paramly.Command<cardfunc.Connection> = {
 		name: "list",
 		description: "Lists orders.",
-		examples: [
-			["", "List all orders."],
-		],
+		examples: [["", "List all orders."]],
 		execute: async (connection, argument, flags) => {
-			const result = connection &&
-				await list(connection)
+			const result = connection && (await list(connection))
 			console.info(JSON.stringify(result, undefined, "\t"))
 			return Array.isArray(result)
-		}
+		},
 	}
 }

@@ -4,13 +4,17 @@ import * as paramly from "paramly"
 import * as cardfunc from "@cardfunc/cli"
 import * as payfunc from "@payfunc/model"
 
-export async function charge(connection: cardfunc.Connection, id: string | authly.Token, amount?: number): Promise<payfunc.Event.Charge | gracely.Error> {
+export async function charge(
+	connection: cardfunc.Connection,
+	id: string | authly.Token,
+	amount?: number
+): Promise<payfunc.Event.Charge | gracely.Error> {
 	const event: Omit<payfunc.Event.Charge, "date"> = { type: "charge" }
 	if (authly.Token.is(id))
 		id = (await payfunc.Order.verify(id))?.id ?? id
 	if (amount != undefined)
 		event.items = amount
-	return connection.post<payfunc.Event.Charge>("private", `order/${ id }/event`, event)
+	return connection.post<payfunc.Event.Charge>("private", `order/${id}/event`, event)
 }
 export namespace charge {
 	export const command: paramly.Command<cardfunc.Connection> = {
@@ -22,10 +26,9 @@ export namespace charge {
 		],
 		execute: async (connection, argument, flags) => {
 			const amount = Number.parseFloat(argument[1])
-			const result = connection &&
-				await charge(connection, argument[0], amount)
+			const result = connection && (await charge(connection, argument[0], amount))
 			console.info(JSON.stringify(result, undefined, "\t"))
 			return payfunc.Event.Charge.is(result)
-		}
+		},
 	}
 }

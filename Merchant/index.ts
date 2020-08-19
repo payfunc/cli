@@ -12,9 +12,4 @@ export const merchantModule = {
 	},
 }
 
-export {
-	create,
-	list,
-	update,
-	merchantModule as module,
-}
+export { create, list, update, merchantModule as module }

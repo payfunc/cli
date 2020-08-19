@@ -20,12 +20,4 @@ const orderModule: paramly.Module<cardfunc.Connection> = {
 	},
 }
 
-export {
-	cancel,
-	charge,
-	create,
-	list,
-	refund,
-	verify,
-	orderModule as module,
-}
+export { cancel, charge, create, list, refund, verify, orderModule as module }

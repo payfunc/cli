@@ -7,10 +7,4 @@ type Connection = cardfunc.Connection
 const Connection = cardfunc.Connection
 const Server = cardfunc.Server
 
-export {
-	Connection,
-	Merchant,
-	Order,
-	Server,
-	Test,
-}
+export { Connection, Merchant, Order, Server, Test }
