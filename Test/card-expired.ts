@@ -32,7 +32,7 @@ export namespace cardExpired {
 			return (
 				gracely.client.malformedContent.is(error) &&
 				error.content.property == "card.pan" &&
-				error.content.description == "Card expired"
+				error.content.description.startsWith("Card expired")
 			)
 		},
 	}
