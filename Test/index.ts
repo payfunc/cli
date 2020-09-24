@@ -1,6 +1,8 @@
 import * as paramly from "paramly"
 import * as cardfunc from "@cardfunc/cli"
 import { card } from "./card"
+import { cardAccount } from "./card-account"
+import { cardOldAccount } from "./card-old-account"
 import { card3dFail } from "./card-3d-fail"
 import { card3dProblem } from "./card-3d-problem"
 import { cardBlocked } from "./card-blocked"
@@ -24,6 +26,8 @@ const testModule: paramly.Module<cardfunc.Connection> = {
 	description: "Create order.",
 	commands: {
 		card: card.command,
+		"card-account": cardAccount.command,
+		"card-old-account": cardOldAccount.command,
 		"card-3d-fail": card3dFail.command,
 		"card-3d-problem": card3dProblem.command,
 		"card-blocked": cardBlocked.command,
