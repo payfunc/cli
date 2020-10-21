@@ -58,8 +58,8 @@
 	},
 	"dependencies": {
 		"@cardfunc/cli": "0.0.36",
-		"@cardfunc/model": "0.0.77",
-		"@payfunc/model": "^0.1.104",
+		"@cardfunc/model": "0.0.82",
+		"@payfunc/model": "^0.2.5",
 		"@types/dotenv": "^8.2.0",
 		"authly": "0.0.40",
 		"dotenv": "^8.2.0",
