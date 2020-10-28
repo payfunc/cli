@@ -29,6 +29,7 @@ export const application = new paramly.Application(
 	async f => cli.Connection.create("payfunc", (f.s ?? f.server)?.[0] ?? "default", (f.u ?? f.url)?.[0])
 )
 application.register(cli.Merchant.module, "merchant", "m")
+application.register(cli.Agent.module, "agent", "ag")
 application.register(cli.Order.module, "order", "o")
 application.register(cli.Server.module, "server", "s")
 application.register(cli.Test.module, "test", "t")

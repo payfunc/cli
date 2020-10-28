@@ -1,6 +1,7 @@
 import { create } from "./create"
 import { list } from "./list"
 import { update } from "./update"
+import { patch } from "./patch"
 
 export const merchantModule = {
 	name: "merchant",
@@ -9,7 +10,8 @@ export const merchantModule = {
 		create: create.command,
 		list: list.command,
 		update: update.command,
+		patch: patch.command,
 	},
 }
 
-export { create, list, update, merchantModule as module }
+export { create, list, patch, update, merchantModule as module }
