@@ -58,7 +58,7 @@
 	},
 	"dependencies": {
 		"@cardfunc/cli": "0.0.37",
-		"@cardfunc/model": "0.0.82",
+		"@payfunc/model-card": "0.1.1",
 		"@payfunc/model": "^0.2.5",
 		"@types/dotenv": "^8.2.0",
 		"authly": "0.0.40",

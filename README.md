@@ -1,5 +1,5 @@
 # PayFunc CLI
-Command line interface for CardFunc.
+Command line interface for PayFunc.
 
 # Installing
 Install using NPM in the global scope:
@@ -12,7 +12,7 @@ Assuming that the `payfunc` command is installed in your path as done above.
 ## Version
 To learn which version you have installed use:
 ```
-cardfunc version
+payfunc version
 ```
 ## Help 
 ### List Modules
