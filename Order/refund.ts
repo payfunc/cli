@@ -1,11 +1,11 @@
 import * as gracely from "gracely"
 import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
 export async function refund(
-	connection: cardfunc.Connection,
+	connection: cli.Connection,
 	id: string,
 	amount?: number
 ): Promise<payfunc.Event.Refund | gracely.Error> {
@@ -17,7 +17,7 @@ export async function refund(
 	return connection.post<payfunc.Event.Refund>("private", `order/${id}/event`, event)
 }
 export namespace refund {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "refund",
 		description: "Refunds order.",
 		examples: [

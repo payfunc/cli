@@ -1,9 +1,9 @@
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import { create } from "./create"
 import { list } from "./list"
 
-const accountModule: paramly.Module<cardfunc.Connection> = {
+const accountModule: paramly.Module<cli.Connection> = {
 	name: "account",
 	description: "Create account.",
 	commands: {

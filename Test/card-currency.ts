@@ -1,13 +1,13 @@
 import * as gracely from "gracely"
 import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 import * as Card from "../Card"
 import * as Order from "../Order"
 
 export namespace cardCurrency {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "card-currency",
 		description: "Fails to create a card order with invalid currency response (40140).",
 		examples: [],

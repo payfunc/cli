@@ -1,16 +1,16 @@
 import * as gracely from "gracely"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
 export async function create(
-	connection: cardfunc.Connection,
+	connection: cli.Connection,
 	merchant: payfunc.Key.Creatable
 ): Promise<payfunc.Merchant | gracely.Error> {
 	return connection.post<payfunc.Merchant>("agent", `merchant`, merchant)
 }
 export namespace create {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "create",
 		description: "Create a new merchant.",
 		examples: [["'<cardfunc json>'", "Create a new merchant."]],

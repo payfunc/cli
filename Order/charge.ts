@@ -1,11 +1,11 @@
 import * as gracely from "gracely"
 import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
 export async function charge(
-	connection: cardfunc.Connection,
+	connection: cli.Connection,
 	id: string | authly.Token,
 	amount?: number
 ): Promise<payfunc.Event.Charge | gracely.Error> {
@@ -17,7 +17,7 @@ export async function charge(
 	return connection.post<payfunc.Event.Charge>("private", `order/${id}/event`, event)
 }
 export namespace charge {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "charge",
 		description: "Charges order.",
 		examples: [

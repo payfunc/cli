@@ -1,7 +1,7 @@
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
-export async function convert(connection: cardfunc.Connection): Promise<cardfunc.Connection | undefined> {
+export async function convert(connection: cli.Connection): Promise<cli.Connection | undefined> {
 	const payfuncPublic = connection?.credentials?.keys.public
 		? await payfunc.Key.unpack(connection?.credentials?.keys.public, "public")
 		: undefined

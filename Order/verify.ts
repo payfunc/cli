@@ -1,12 +1,12 @@
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
 export function verify(Order: string): Promise<payfunc.Order | undefined> {
 	return payfunc.Order.verify(Order)
 }
 export namespace verify {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "verify",
 		description: "Verifies order.",
 		examples: [["<order>", "Verifies order."]],

@@ -2,13 +2,13 @@ import * as isoly from "isoly"
 import * as gracely from "gracely"
 import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 import * as Card from "../Card"
 import { post } from "./post"
 
 export async function create(
-	connection: cardfunc.Connection,
+	connection: cli.Connection,
 	order: payfunc.Order.Creatable,
 	auto3d?: boolean
 ): Promise<authly.Token | gracely.Error> {
@@ -18,9 +18,9 @@ export async function create(
 		auto3d &&
 		payfunc.Payment.Card.Creatable.is(order.payment) &&
 		order.payment.card &&
-		cardfunc.Pares.missing(response)
+		cli.Pares.missing(response)
 	) {
-		const pares = await cardfunc.Pares.get(response)
+		const pares = await cli.Pares.get(response)
 		const card = await Card.update(connection, order.payment.card, { pares })
 		if (gracely.Error.is(card))
 			result = card
@@ -33,7 +33,7 @@ export async function create(
 	return result
 }
 export namespace create {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "create",
 		description: "Create a order.",
 		examples: [
@@ -52,7 +52,7 @@ export namespace create {
 			if (payfunc.Payment.Type.is(type))
 				switch (type) {
 					case "card":
-						payment = (await cardfunc.Authorization.verify(argument[1]))
+						payment = (await cli.Authorization.verify(argument[1]))
 							? { type, reference: argument[1] }
 							: { type, card: argument[1] }
 						break

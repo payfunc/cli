@@ -1,13 +1,13 @@
 import * as gracely from "gracely"
 import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 import * as Card from "../Card"
 import { post } from "./post"
 
 export async function create(
-	connection: cardfunc.Connection,
+	connection: cli.Connection,
 	account: payfunc.Account.Creatable,
 	auto3d?: boolean
 ): Promise<payfunc.Account | gracely.Error> {
@@ -22,7 +22,7 @@ export async function create(
 		payfunc.PaymentVerifier.Response.VerificationRequired.isCardVerificationError(response) &&
 		(pareq = response.content.details.data?.pareq || response.content.details.data?.PaReq)
 	) {
-		const pares = await cardfunc.Pares.get({ url: response.content.details.url, pareq })
+		const pares = await cli.Pares.get({ url: response.content.details.url, pareq })
 		const methodCard = account.method[account.method.length - 1].card
 		const card =
 			pares && methodCard
@@ -41,7 +41,7 @@ export async function create(
 	return result
 }
 export namespace create {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "create",
 		description: "Create a account.",
 		examples: [

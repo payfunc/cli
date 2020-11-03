@@ -1,7 +1,7 @@
 import * as gracely from "gracely"
 import * as authly from "authly"
 import * as modelCard from "@payfunc/model-card"
-import * as cli from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as Connection from "./Connection"
 
 export async function create(

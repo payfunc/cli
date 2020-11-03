@@ -1,17 +1,17 @@
 import * as authly from "authly"
 import * as gracely from "gracely"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 import * as Account from "../Account"
 import * as Order from "../Order"
 import * as Card from "../Card"
 
 export namespace cardAccount {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "card-account",
 		description:
-			"Creates a card order with an old account (with reference to a @cardfunc/model.Account), charges and refunds it.",
+			"Creates a card order with an old account (with reference to a @payfunc/model-card.Account), charges and refunds it.",
 		examples: [],
 		execute: async (connection, argument, flags) => {
 			let result: boolean

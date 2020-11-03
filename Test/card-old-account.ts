@@ -1,14 +1,14 @@
 import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 import * as Order from "../Order"
 
 export namespace cardOldAccount {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "card-old-account",
 		description:
-			"Creates a card order with an old account (with reference to a @cardfunc/model.Account), charges and refunds it.",
+			"Creates a card order with an old account (with reference to a @payfunc/model-card.Account), charges and refunds it.",
 		examples: [],
 		execute: async (connection, argument, flags) => {
 			// This test will fail locally. This is a legacy test with a token that isn't possible to create anymore (but may still be used by old merchants). If cardfunc card (testtest user) with id: "wLSTzEra" is removed this test will fail on all servers.

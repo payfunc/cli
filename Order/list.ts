@@ -1,13 +1,13 @@
 import * as gracely from "gracely"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
-export function list(connection: cardfunc.Connection): Promise<payfunc.Order[] | gracely.Error> {
+export function list(connection: cli.Connection): Promise<payfunc.Order[] | gracely.Error> {
 	return connection.get<payfunc.Order[]>("private", "order")
 }
 export namespace list {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "list",
 		description: "Lists orders.",
 		examples: [["", "List all orders."]],

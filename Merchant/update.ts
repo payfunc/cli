@@ -1,17 +1,17 @@
 import * as gracely from "gracely"
 import * as paramly from "paramly"
-import * as cardfunc from "@cardfunc/cli"
+import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
 
 export async function update(
-	connection: cardfunc.Connection,
+	connection: cli.Connection,
 	id: string,
 	merchant: payfunc.Key.Creatable
 ): Promise<payfunc.Merchant | gracely.Error> {
 	return connection.put<payfunc.Merchant>("agent", `merchant/${id}`, merchant)
 }
 export namespace update {
-	export const command: paramly.Command<cardfunc.Connection> = {
+	export const command: paramly.Command<cli.Connection> = {
 		name: "update",
 		description: "Update merchant.",
 		examples: [["<Id> '<cardfunc json>'", "Update merchant."]],
