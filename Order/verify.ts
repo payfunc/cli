@@ -1,6 +1,6 @@
 import * as paramly from "paramly"
-import * as cli from "@payfunc/cli-card"
 import * as payfunc from "@payfunc/model"
+import * as cli from "@payfunc/cli-card"
 
 export function verify(Order: string): Promise<payfunc.Order | undefined> {
 	return payfunc.Order.verify(Order)

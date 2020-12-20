@@ -1,9 +1,9 @@
-import * as isoly from "isoly"
 import * as gracely from "gracely"
-import * as authly from "authly"
+import * as isoly from "isoly"
 import * as paramly from "paramly"
-import * as cli from "@payfunc/cli-card"
+import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
+import * as cli from "@payfunc/cli-card"
 import * as Card from "../Card"
 import { post } from "./post"
 
@@ -14,12 +14,7 @@ export async function create(
 ): Promise<authly.Token | gracely.Error> {
 	let result: authly.Token | gracely.Error
 	const response = await post(connection, order)
-	if (
-		auto3d &&
-		payfunc.Payment.Card.Creatable.is(order.payment) &&
-		order.payment.card &&
-		cli.Pares.missing(response)
-	) {
+	if (auto3d && payfunc.Payment.Card.Creatable.is(order.payment) && order.payment.card && cli.Pares.missing(response)) {
 		const pares = await cli.Pares.get(response)
 		const card = await Card.update(connection, order.payment.card, { pares })
 		if (gracely.Error.is(card))

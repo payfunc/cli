@@ -1,6 +1,6 @@
 import * as cli from "@payfunc/cli-card"
-import * as Merchant from "./Merchant"
 import * as Agent from "./Agent"
+import * as Merchant from "./Merchant"
 import * as Order from "./Order"
 import * as Test from "./Test"
 

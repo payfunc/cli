@@ -1,13 +1,10 @@
 import * as gracely from "gracely"
-import * as authly from "authly"
 import * as paramly from "paramly"
-import * as cli from "@payfunc/cli-card"
+import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
+import * as cli from "@payfunc/cli-card"
 
-export async function cancel(
-	connection: cli.Connection,
-	id: string
-): Promise<payfunc.Event.Cancel | gracely.Error> {
+export async function cancel(connection: cli.Connection, id: string): Promise<payfunc.Event.Cancel | gracely.Error> {
 	const event: Omit<payfunc.Event.Cancel, "date"> = { type: "cancel" }
 	if (authly.Token.is(id))
 		id = (await payfunc.Order.verify(id))?.id ?? id

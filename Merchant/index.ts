@@ -1,7 +1,7 @@
 import { create } from "./create"
 import { list } from "./list"
-import { update } from "./update"
 import { patch } from "./patch"
+import { update } from "./update"
 
 export const merchantModule = {
 	name: "merchant",
