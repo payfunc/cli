@@ -2,6 +2,7 @@ import * as gracely from "gracely"
 import * as isoly from "isoly"
 import * as paramly from "paramly"
 import * as authly from "authly"
+import * as modelCard from "@payfunc/model-card"
 import * as payfunc from "@payfunc/model"
 import * as cli from "@payfunc/cli-card"
 import * as Card from "../Card"
@@ -16,7 +17,12 @@ export async function create(
 	const response = await post(connection, order)
 	if (auto3d && payfunc.Payment.Card.Creatable.is(order.payment) && order.payment.card && cli.Pares.missing(response)) {
 		const pares = await cli.Pares.get(response)
-		const card = await Card.update(connection, order.payment.card, { pares })
+		const card = await Card.update(connection, order.payment.card, {
+			verification: {
+				type: "pares",
+				data: pares,
+			},
+		})
 		if (gracely.Error.is(card))
 			result = card
 		else {
@@ -47,7 +53,7 @@ export namespace create {
 			if (payfunc.Payment.Type.is(type))
 				switch (type) {
 					case "card":
-						payment = (await cli.Authorization.verify(argument[1]))
+						payment = (await modelCard.Authorization.verify(argument[1]))
 							? { type, reference: argument[1] }
 							: { type, card: argument[1] }
 						break
