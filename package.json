@@ -1,6 +1,6 @@
 {
 	"name": "@payfunc/cli",
-	"version": "0.0.23",
+	"version": "0.0.24",
 	"description": "PayFunc command line interface.",
 	"author": "PayFunc",
 	"license": "MIT",
