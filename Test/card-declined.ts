@@ -1,15 +1,15 @@
 import * as gracely from "gracely"
-import * as paramly from "paramly"
 import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
-import * as cli from "@payfunc/cli-card"
 import * as Card from "../Card"
 import * as Order from "../Order"
+import { TestCommand } from "./TestCommand"
 
 export namespace cardDeclined {
-	export const command: paramly.Command<cli.Connection> = {
+	export const command: TestCommand = {
+		system: ["azure", "cloudflare"],
 		name: "card-declined",
-		description: "Fails to create a card order with invalid currency response (40140).",
+		description: "Fails to create a card order with declined by issuer or card scheme response (40410).",
 		examples: [],
 		execute: async (connection, argument, flags) => {
 			const c =

@@ -1,13 +1,13 @@
 import * as gracely from "gracely"
-import * as paramly from "paramly"
 import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
-import * as cli from "@payfunc/cli-card"
 import * as Card from "../Card"
 import * as Order from "../Order"
+import { TestCommand } from "./TestCommand"
 
 export namespace cardFunds {
-	export const command: paramly.Command<cli.Connection> = {
+	export const command: TestCommand = {
+		system: ["azure", "cloudflare"],
 		name: "card-funds",
 		description: "Fails to create a card order with insufficient funds response (40413).",
 		examples: [],
@@ -15,7 +15,7 @@ export namespace cardFunds {
 			const c =
 				connection &&
 				(await Card.create(connection, {
-					pan: "420000401400000",
+					pan: "420000404130000",
 					expires: [2, 22],
 					csc: "987",
 				}))

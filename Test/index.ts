@@ -1,4 +1,6 @@
 import * as paramly from "paramly"
+import * as authly from "authly"
+import * as model from "@payfunc/model"
 import * as cli from "@payfunc/cli-card"
 import { card } from "./card"
 import { card3dFail } from "./card-3d-fail"
@@ -20,8 +22,9 @@ import { cardOldAccount } from "./card-old-account"
 import { cardTransaction } from "./card-transaction"
 import { cardUnsupported } from "./card-unsupported"
 import { cardViolation } from "./card-violation"
+import { TestCommand } from "./TestCommand"
 
-const testModule: paramly.Module<cli.Connection> = {
+const testModule: paramly.Module<cli.Connection> & { commands: { [command: string]: TestCommand | undefined } } = {
 	name: "order",
 	description: "Create order.",
 	commands: {
@@ -46,15 +49,18 @@ const testModule: paramly.Module<cli.Connection> = {
 		"card-unsupported": cardUnsupported.command,
 		"card-violation": cardViolation.command,
 		_: {
+			system: ["azure", "cloudflare"],
 			name: "_",
 			description: "Runs tests.",
 			examples: [["", "Invoke all tests."]],
 			execute: async (connection, argument, flags) => {
+				const system = await getSystemFromKey(connection?.credentials?.keys.public)
 				console.info("PayFunc Test\n")
 				const result = (
 					await Promise.all(
 						Object.values(testModule.commands)
 							.filter(c => c?.name != "_")
+							.filter(c => c?.system.some(s => s == system))
 							.map(async c => {
 								const r = await c?.execute(connection, argument, flags)
 								console.info(c?.name.padEnd(20, ".") + (r ? "ok" : "fail").padStart(4, "."))
@@ -67,6 +73,17 @@ const testModule: paramly.Module<cli.Connection> = {
 			},
 		},
 	},
+}
+
+async function getSystemFromKey(key: authly.Token | undefined): Promise<"cloudflare" | "azure"> {
+	const unpacked = key ? await model.Key.unpack(key) : undefined
+	return unpacked?.card?.url.startsWith("https://api.payfunc")
+		? "cloudflare"
+		: unpacked?.card?.url.startsWith("https://api.cardfunc")
+		? "azure"
+		: unpacked?.card?.url.startsWith("http://localhost:7100")
+		? "cloudflare"
+		: "azure"
 }
 
 export { card, cardCancel, cardCsc, cardCurrency, testModule as module }

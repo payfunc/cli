@@ -1,11 +1,11 @@
-import * as paramly from "paramly"
 import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
-import * as cli from "@payfunc/cli-card"
 import * as Order from "../Order"
+import { TestCommand } from "./TestCommand"
 
 export namespace cardOldAccount {
-	export const command: paramly.Command<cli.Connection> = {
+	export const command: TestCommand = {
+		system: ["azure"],
 		name: "card-old-account",
 		description:
 			"Creates a card order with an old account (with reference to a @payfunc/model-card.Account), charges and refunds it.",

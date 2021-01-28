@@ -1,13 +1,13 @@
 import * as gracely from "gracely"
-import * as paramly from "paramly"
 import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
-import * as cli from "@payfunc/cli-card"
 import * as Card from "../Card"
 import * as Order from "../Order"
+import { TestCommand } from "./TestCommand"
 
 export namespace cardInput {
-	export const command: paramly.Command<cli.Connection> = {
+	export const command: TestCommand = {
+		system: ["azure", "cloudflare"],
 		name: "card-input",
 		description: "Fails to create a card order with general input error response (40000).",
 		examples: [],

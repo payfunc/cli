@@ -1,12 +1,12 @@
-import * as paramly from "paramly"
 import * as authly from "authly"
 import * as payfunc from "@payfunc/model"
-import * as cli from "@payfunc/cli-card"
 import * as Card from "../Card"
 import * as Order from "../Order"
+import { TestCommand } from "./TestCommand"
 
 export namespace card {
-	export const command: paramly.Command<cli.Connection> = {
+	export const command: TestCommand = {
+		system: ["azure", "cloudflare"],
 		name: "card",
 		description: "Creates a card order, charges and refunds it.",
 		examples: [],
