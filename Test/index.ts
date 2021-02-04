@@ -5,6 +5,8 @@ import * as cli from "@payfunc/cli-card"
 import { card } from "./card"
 import { card3dFail } from "./card-3d-fail"
 import { card3dProblem } from "./card-3d-problem"
+import { card3d2 } from "./card-3d2"
+import { card3d2Extensive } from "./card-3d2-extensive"
 import { cardAccount } from "./card-account"
 import { cardBlocked } from "./card-blocked"
 import { cardCancel } from "./card-cancel"
@@ -29,6 +31,8 @@ const testModule: paramly.Module<cli.Connection> & { commands: { [command: strin
 	description: "Create order.",
 	commands: {
 		card: card.command,
+		"card-3d2": card3d2.command,
+		"card-3d2-extensive": card3d2Extensive.command,
 		"card-account": cardAccount.command,
 		"card-old-account": cardOldAccount.command,
 		"card-3d-fail": card3dFail.command,

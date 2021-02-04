@@ -57,11 +57,11 @@
 		"clean": "rm -rf dist node_modules coverage"
 	},
 	"dependencies": {
-		"@payfunc/cli-card": "0.1.6",
-		"@payfunc/model-card": "0.1.10",
+		"@payfunc/cli-card": "0.1.10",
+		"@payfunc/model-card": "0.1.15",
 		"@payfunc/model": "^0.2.39",
 		"@types/dotenv": "^8.2.0",
-		"authly": "0.0.40",
+		"authly": "0.1.7",
 		"dotenv": "^8.2.0",
 		"eslint": "^7.7.0",
 		"gracely": "0.0.35",

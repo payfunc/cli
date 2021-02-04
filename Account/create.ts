@@ -1,9 +1,9 @@
 import * as gracely from "gracely"
 import * as paramly from "paramly"
 import * as authly from "authly"
+import * as modelCard from "@payfunc/model-card"
 import * as payfunc from "@payfunc/model"
 import * as cli from "@payfunc/cli-card"
-import * as Card from "../Card"
 import { post } from "./post"
 
 export async function create(
@@ -11,34 +11,28 @@ export async function create(
 	account: payfunc.Account.Creatable,
 	auto3d?: boolean
 ): Promise<payfunc.Account | gracely.Error> {
-	let result: payfunc.Account | gracely.Error
-	const response = await post(connection, account)
-	let pareq: string | undefined
-	if (
+	let result: payfunc.Account | authly.Token | gracely.Error | undefined
+	let card: authly.Token | undefined
+	result = await post(connection, account)
+	let attempt = 0
+	const merchant = await payfunc.Key.getVerifier().verify(connection.credentials?.keys.public, "public")
+	while (
+		cli.Verification.Error.is(result) &&
 		auto3d &&
 		account.method.length > 0 &&
 		payfunc.Account.Method.Card.Creatable.Token.is(account.method[account.method.length - 1]) &&
 		account.method[account.method.length - 1].card &&
-		payfunc.PaymentVerifier.Response.VerificationRequired.isCardVerificationError(response) &&
-		(pareq = response.content.details.data?.pareq || response.content.details.data?.PaReq)
+		attempt < 4
 	) {
-		const pares = await cli.Pares.get({ url: response.content.details.url, pareq })
-		const methodCard = account.method[account.method.length - 1].card
-		const card =
-			pares && methodCard
-				? await Card.update(connection, methodCard, {
-						verification: { type: "pares", data: pares },
-				  })
-				: gracely.server.backendFailure("Failed to get pares")
-		if (gracely.Error.is(card))
-			result = card
-		else {
+		card = account.method[account.method.length - 1].card
+		card = card ? await cli.Verification.get(result, merchant as modelCard.Merchant, card) : undefined
+		if (card) {
 			account.method[account.method.length - 1].card = card
 			result = await post(connection, account)
 		}
-	} else
-		result = response
-	return result
+		attempt += 1
+	}
+	return result ? result : gracely.client.invalidContent("input", "couldn't create verifiable card payment")
 }
 export namespace create {
 	export const command: paramly.Command<cli.Connection> = {

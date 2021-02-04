@@ -5,7 +5,6 @@ import * as authly from "authly"
 import * as modelCard from "@payfunc/model-card"
 import * as payfunc from "@payfunc/model"
 import * as cli from "@payfunc/cli-card"
-import * as Card from "../Card"
 import { post } from "./post"
 
 export async function create(
@@ -13,25 +12,26 @@ export async function create(
 	order: payfunc.Order.Creatable,
 	auto3d?: boolean
 ): Promise<authly.Token | gracely.Error> {
-	let result: authly.Token | gracely.Error
-	const response = await post(connection, order)
-	if (auto3d && payfunc.Payment.Card.Creatable.is(order.payment) && order.payment.card && cli.Pares.missing(response)) {
-		const pares = await cli.Pares.get(response)
-		const card = await Card.update(connection, order.payment.card, {
-			verification: {
-				type: "pares",
-				data: pares,
-			},
-		})
-		if (gracely.Error.is(card))
-			result = card
-		else {
+	let result: authly.Token | gracely.Error | undefined
+	let card: authly.Token | undefined
+	result = await post(connection, order)
+	let attempt = 0
+	const merchant = await payfunc.Key.getVerifier().verify(connection.credentials?.keys.public, "public")
+	while (
+		cli.Verification.Error.is(result) &&
+		auto3d &&
+		payfunc.Payment.Card.Creatable.is(order.payment) &&
+		order.payment.card &&
+		attempt < 4
+	) {
+		card = await cli.Verification.get(result, merchant as modelCard.Merchant, order.payment.card)
+		if (card) {
 			order.payment.card = card
 			result = await post(connection, order)
 		}
-	} else
-		result = response
-	return result
+		attempt += 1
+	}
+	return result ? result : gracely.client.invalidContent("input", "couldn't create verifiable card payment")
 }
 export namespace create {
 	export const command: paramly.Command<cli.Connection> = {

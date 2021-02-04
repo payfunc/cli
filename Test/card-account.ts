@@ -36,6 +36,17 @@ export namespace cardAccount {
 								{
 									type: "token",
 									card: c,
+									client: {
+										browser: {
+											colorDepth: 24,
+											java: false,
+											javascript: true,
+											locale: "sv-SE",
+											parent: "http://localhost",
+											resolution: [2560, 1440],
+											timezone: -60,
+										},
+									},
 								},
 							],
 						},
